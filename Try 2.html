@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alter erhöhen</title>
+</head>
+<body>
+    <h1 id="alter"></h1>
+    <p id="timer"></p>
+    <button id="stop_time"></button>
+    <p id="alterstod"></p>
+
+    <script>
+        let alter = -1; // Initiales Alter
+        let intervalId; // Variable für das Intervall
+        let countdown = 60; // Countdown in Sekunden (1 Stunde)
+        let timerLäuft = true; // Status des Timers (läuft oder nicht)
+        let nächstesalter = 0;
+
+        function updateTimerDisplay() {
+            document.getElementById("timer").innerText = "Du wirst " + nächstesalter + " in " + countdown + " Sekunden";
+        }
+
+        function alterErhöhen() {
+            alter++; // Alter um 1 Jahr erhöhen
+            document.getElementById("alter").innerText = "Alter: " + alter; // Anzeige des neuen Alters
+            countdown = 60; // Countdown wieder auf 3600 Sekunden setzen
+            updateTimerDisplay(); // Timer zurücksetzen und anzeigen
+        }
+
+        function nächstesaltererhöhen() {
+            nächstesalter++;
+        }
+        // Startet das Intervall und führt die Funktion jede Sekunde aus
+        function startTimer() {
+            intervalId = setInterval(function() {
+                countdown--; // Countdown um 1 Sekunde reduzieren
+                updateTimerDisplay(); // Countdown-Anzeige aktualisieren
+
+                if (countdown === 0) {
+                    nächstesaltererhöhen();
+                    alterErhöhen(); // Wenn Countdown abgelaufen ist, Alter erhöhen
+                    
+                }
+            }, 1000); // Jede Sekunde den Countdown aktualisieren
+            timerLäuft = true; // Timer läuft jetzt
+            document.getElementById("stop_time").innerText = "Stopp Zeit"; // Button-Text aktualisieren
+        }
+
+        // Timer anhalten
+        function stopTimer() {
+            clearInterval(intervalId); // Stoppt das Intervall
+            timerLäuft = false; // Timer ist jetzt gestoppt
+            document.getElementById("stop_time").innerText = "Zeit Weiter"; // Button-Text aktualisieren
+            console.log("Timer gestoppt.");
+        }
+
+        // Start/Stop-Funktion für den Button
+        function toggleTimer() {
+            if (timerLäuft) {
+                stopTimer(); // Wenn der Timer läuft, anhalten
+            } else {
+                startTimer(); // Wenn der Timer gestoppt ist, neu starten
+            }
+        }
+
+        function alterstod() {
+            if (alter > Math.random)
+            document.getElementById("alterstod").innerText = "Du bist friedlich eingeschlafen und nie mehr aufgewacht";
+        }
+
+        // Starte den Timer beim Laden der Seite
+        alterErhöhen(); // Alter beim Start einmal erhöhen
+        startTimer(); // Timer starten
+        nächstesaltererhöhen();
+        alterstod();
+
+        // Event Listener für den Button, um den Timer zu starten oder zu stoppen
+        document.getElementById("stop_time").addEventListener("click", toggleTimer);
+
+        
+    </script>
+</body>
+</html>
